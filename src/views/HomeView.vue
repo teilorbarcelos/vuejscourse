@@ -17,5 +17,7 @@ export default {
     BurgerForm
   }
 }
-
 </script>
+
+<style>
+</style>

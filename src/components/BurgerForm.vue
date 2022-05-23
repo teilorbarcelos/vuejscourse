@@ -2,7 +2,7 @@
   <div>
     <p>componente de mensagem</p>
 
-    <div>
+    <div id="burger-form-container">
       <form id="burger-form">
         <Input label="Nome do cliente:" type="text" id="name" model="name" placeholder="Digite seu nome" />
 
@@ -12,8 +12,8 @@
         <Input label="Escolha a carne do seu burger:" type="select" id="meat" model="meat"
           placeholder="Selecione o tipo de carne" :options="meats" />
 
-        <Input label="Selecione os opcionais:" type="checkbox" id="options" name="options" model="options"
-          :options="options" />
+        <Input label="Selecione os opcionais:" type="checkbox" id="optionals" name="optionals" model="optionals"
+          :options="optionals" />
 
         <div id="submit-button-container">
           <Button type="submit" label="Criar meu Burger!" />
@@ -23,7 +23,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Input from "./Input.vue";
 import Button from "./Button.vue";
 
@@ -33,19 +33,33 @@ export default {
   data() {
     return {
       name: "",
-      breads: [{ value: 'integral', label: 'Integral' }],
-      meats: [{ value: 'maminha', label: 'Maminha' }],
-      options: [
-        { value: 'salame', label: 'Salame' },
-        { value: 'cebola', label: 'Cebola' },
-        { value: 'alho', label: 'Alho' }
-      ]
+      breads: null,
+      meats: null,
+      optionals: null
     }
+  },
+  methods: {
+    async getRecipes() {
+      const response = await fetch("http://localhost:3000/recipes")
+      const data = await response.json()
+
+      this.breads = data.breads
+      this.meats = data.meats
+      this.optionals = data.optionals
+    }
+  },
+  mounted() {
+    this.getRecipes()
   }
 }
 </script>
 
 <style scoped>
+#burger-form-container {
+  display: flex;
+  justify-content: center;
+}
+
 #burger-form {
   width: max-content;
   max-width: 400px;

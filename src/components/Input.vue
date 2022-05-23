@@ -2,16 +2,16 @@
   <div id="input-container">
     <label :for="id || name">{{ label }}</label>
     <div v-if="type === 'checkbox'" id="checkboxes-container">
-      <div v-for="(option, index) in options" v-bind:key="index" class="checkbox-container">
-        <input :type="type" :name="name" :v-model="model" :value="option.value" />
-        <span>{{ option.label }}</span>
+      <div v-for="option in options" :key="option.id" class="checkbox-container">
+        <input :type="type" :name="name" :v-model="model" :value="option.tipo" />
+        <span>{{ option.tipo }}</span>
       </div>
     </div>
 
     <div v-else-if="type === 'select'">
       <select :id="id" :name="name || id" :v-model="model">
         <option value="">{{ placeholder }}</option>
-        <option v-for="(option, index) in options" v-bind:key="index" :value="option.value">{{ option.label }}</option>
+        <option v-for="option in options" :key="option.id" :value="option.tipo">{{ option.tipo }}</option>
       </select>
     </div>
 
@@ -33,9 +33,11 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
+  width: max-content;
 }
 
 label {
+  width: max-content;
   font-weight: bold;
   margin-bottom: 15px;
   color: #222;
@@ -52,6 +54,7 @@ select {
 #checkboxes-container {
   display: flex;
   flex-wrap: wrap;
+  width: 300px;
 }
 
 .checkbox-container {
